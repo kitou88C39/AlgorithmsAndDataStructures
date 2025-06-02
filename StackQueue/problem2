@@ -1,0 +1,17 @@
+import java.util.*;
+
+public class Main{
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        char[] stack = new char[256];      // キュー本体
+        int stack_size = 0;   // スタックに入っている要素数
+
+        for (int j = 0; j < stack_size; j++) {
+            System.out.print(stack[j]);
+        }
+
+        sc.close();
+    }
+}
