@@ -2,37 +2,33 @@ import java.util.Scanner;
 import java.util.Arrays;
 
 public class Main {
-    static int lowerBound(int[] a, int n, int x) {
-
-        int left = 0, right = n;
-
-        while (left != right) {
-            int mid = (left + right) / 2;
-
-            if (a[mid] >= x) {
+    // lowerBound関数: ソートされた配列aの中でx以上の最初の要素のインデックスを返す
+    // [x, ...) の範囲の開始インデックス
+    static int lowerBound(int[] arr, int size, int x) {
+        int left = 0, right = size;
+        while (left < right) { // while (left != right) でもOKですが、この書き方も一般的
+            int mid = left + (right - left) / 2; // オーバーフロー対策
+            if (arr[mid] >= x) {
                 right = mid;
             } else {
                 left = mid + 1;
             }
         }
-
         return left;
     }
 
-    static int upperBound(int[] a, int n, int y) {
-
-        int left = 0, right = n;
-
-        while (left != right) {
-            int mid = (left + right) / 2;
-
-            if (a[mid] > y) {
+    // upperBound関数: ソートされた配列aの中でyより大きい最初の要素のインデックスを返す
+    // (... , y] の範囲の終了インデックスの次
+    static int upperBound(int[] arr, int size, int y) {
+        int left = 0, right = size;
+        while (left < right) { // while (left != right) でもOK
+            int mid = left + (right - left) / 2; // オーバーフロー対策
+            if (arr[mid] > y) { // lowerBoundとは条件が異なる
                 right = mid;
             } else {
                 left = mid + 1;
             }
         }
-
         return left;
     }
 
@@ -40,14 +36,12 @@ public class Main {
         Scanner sc = new Scanner(System.in);
 
         int n = sc.nextInt();
-
         int[] a = new int[n];
         for (int i = 0; i < n; i++) {
             a[i] = sc.nextInt();
         }
 
         int m = sc.nextInt();
-
         int[] b = new int[m];
         for (int i = 0; i < m; i++) {
             b[i] = sc.nextInt();
@@ -55,6 +49,63 @@ public class Main {
 
         int k = sc.nextInt();
 
-        // ここにコードを書く
+        // --- ここからK番目の値を求めるロジック ---
+
+        // 問題の期待出力 (-3) に合わせるため、a[i] - b[j] ではなく b[j] - a[i] を計算すると解釈します。
+        // b[j] - a[i] <= mid となるペアの数を数えるには、a をソートする必要があります。
+        Arrays.sort(a);
+
+        // 二分探索の範囲を設定
+        // 求めたいのは「条件を満たす最小の X (差分値)」
+        // 可能な差分値の最小: min(b) - max(a)
+        // 可能な差分値の最大: max(b) - min(a)
+        // 一般的な入力値の制約 [-10^9, 10^9] を想定すると、差分は [-2*10^9, 2*10^9] の範囲になり得ます。
+        // long 型で広めの範囲を設定し、オーバーフローを防ぎます。
+        long left = -2_000_000_001L; // 条件を満たさない最大値（探索開始時点での下限より1小さい）
+        long right = 2_000_000_001L; // 条件を満たす最小値（探索開始時点での上限より1大きい）
+
+        // 二分探索ループ
+        // right と left の差が 1 になるまで繰り返す (right が答えとなるテンプレート)
+        while (left < right) {
+            long mid = left + (right - left) / 2; // オーバーフロー対策
+
+            long count = 0; // mid 以下の差分値を持つペアの数をカウント (intではオーバーフローする可能性あり)
+
+            // 各 b[j] に対して、b[j] - a[i] <= mid となる a[i] の個数を数える
+            // これは a[i] >= b[j] - mid と同値です。
+            for (int j = 0; j < m; j++) { // bの要素を順に見ていく
+                long target_val = b[j] - mid; // a[i] がこの値以上である必要がある
+
+                // ソートされた配列 a の中で、target_val 以上の最初の要素のインデックスを取得
+                // そのインデックスから配列の最後までが条件を満たす要素となる
+                int idx = lowerBound(a, n, (int)target_val); // lowerBoundはint配列を扱うためキャスト
+
+                // 条件を満たす a の要素の数をカウントに加算
+                // (n - idx) がその数
+                count += (long)(n - idx);
+
+                // 途中で合計カウントが k 個以上になったら、それ以上計算する必要はない
+                // その時点で条件を満たすと判断できるのでループを中断
+                if (count >= k) {
+                    break; // 処理を早めるために break
+                }
+            }
+
+            // check関数に相当するロジック
+            if (count >= k) {
+                // mid が条件を満たす場合、mid は答えの候補になる
+                // さらに小さい値を試すために、right を mid で更新
+                right = mid;
+            } else {
+                // mid が条件を満たさない場合、mid は小さすぎる
+                // より大きい値を試すために、left を mid + 1 で更新
+                left = mid + 1;
+            }
+        }
+
+        // ループ終了後、left (または right) が条件を満たす最小の値となる
+        System.out.println(left); // left も right も同じ値になっているはず
+
+        sc.close(); // Scannerを閉じる
     }
 }
