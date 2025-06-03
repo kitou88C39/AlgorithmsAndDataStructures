@@ -5,24 +5,51 @@ public class Main{
 
         Scanner sc = new Scanner(System.in);
 
-        int n,k;
+        int n, k;
 
-        n = sc.nextInt();
-        k = sc.nextInt();
+        n = sc.nextInt(); // 社員の数
+        k = sc.nextInt(); // エスカレーターの全長 (秒数)
 
-        int[] a = new int[n];
-
+        int[] a = new int[n]; // 各社員がエスカレーターに乗る時刻
         for (int i = 0; i < n; i++) {
             a[i] = sc.nextInt();
         }
 
-        Queue<Integer> que = new ArrayDeque<>();
+        Queue<Integer> que = new ArrayDeque<>(); // エスカレーターに乗っている人の「降りる時刻」を格納するキュー
 
-        int next_person = 0;
-        int person_on_escalator = 0;
+        int next_person = 0; // 次にエスカレーターに乗る社員のa配列内のインデックス
 
-        for (int time = 1; time < 50000; time++) {
-            // ここにエスカレーターのシミュレーションにあたるコードを書く
+        // time は 1 から始まる
+        // a_N の最大が 50000 未満なので、ループの最大時刻は (a_N + K) を考慮して 50000 程度で十分
+        // ただし、最後の人が降りるまでシミュレーションする必要があるため、もう少し余裕を持たせる
+        // 例: a_N=49999, K=99 -> 49999 + 99 = 50098
+        // ここでは time < 50100 くらいで十分
+        // もしくは、全ての社員が乗り終わって、かつキューが空になるまで続ける
+        for (int time = 1; ; time++) { // 無限ループにし、内部で終了条件をチェックする
+            
+            // 1. 現在時刻 time で降りる人がいたらキューから取り除く
+            // キューの先頭にある降りる時刻が現在の時刻以下であれば、その人は降りた
+            while (!que.isEmpty() && que.peek() <= time) {
+                que.poll(); // キューから取り出す
+            }
+
+            // 2. 現在時刻 time で乗る人がいたらキューに追加し、人数を出力する
+            // next_person が n より小さい (まだ乗る人がいる) かつ
+            // 現在の時刻が次の人が乗る時刻と一致する場合
+            if (next_person < n && a[next_person] == time) {
+                // 乗る時刻 + K が降りる時刻
+                que.offer(time + k); // 降りる時刻をキューに追加
+                
+                // 社員が乗った直後の人数を出力
+                System.out.println(que.size());
+                
+                next_person++; // 次の社員へインデックスを進める
+            }
+
+            // 3. 全ての社員が乗り終わり、かつエスカレーター上に誰もいなくなったらシミュレーション終了
+            if (next_person == n && que.isEmpty()) {
+                break; // ループを抜ける
+            }
         }
         sc.close();
     }
