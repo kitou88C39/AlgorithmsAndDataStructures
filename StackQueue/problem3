@@ -5,26 +5,44 @@ public class Main{
 
         Scanner sc = new Scanner(System.in);
 
-        char[] stack = new char[256];      // スタック本体
-        int stack_size = 0;   // スタックに入っている要素数
+        char[] stack = new char[256];      // スタック本体 (十分なサイズを確保)
+        int stack_size = 0;    // スタックに入っている要素数 (スタックのトップ+1 を指す)
 
-        int q = sc.nextInt();
+        int q = sc.nextInt(); // クエリの数
 
         for (int i = 0; i < q; i++) {
-            int query = sc.nextInt();
+            int query = sc.nextInt(); // クエリの種類
+            
             if (query == 1) {
-                // PUSH の処理をここに書く
+                // PUSH の処理 (1 X)
+                String s = sc.next(); // 文字Xを読み込む (charAt(0)でcharに変換)
+                char x = s.charAt(0);
+                
+                stack[stack_size] = x;    // スタックの末尾にXを追加
+                stack_size++;             // 要素数をインクリメント
             } else if (query == 2) {
-                // POP の処理をここに書く
+                // POP の処理 (2)
+                // 制約により、POP時には必ず配列に要素が1つ以上存在する
+                
+                // 1. 配列 A の末尾にある要素を出力
+                // stack_size - 1 が現在のトップ要素のインデックス
+                System.out.println(stack[stack_size - 1]); 
+                
+                // 2. その要素を削除 (論理的な削除なので stack_size をデクリメントするだけ)
+                stack_size--;             // 要素数をデクリメント
             }
+            
+            // 各クエリの処理が終わったあと、配列 A の各要素の値を半角スペース区切りで出力
+            // A が空の場合は改行のみ
             for (int j = 0; j < stack_size; j++) {
-                if (j > 0) {
+                if (j > 0) { // 最初の要素以外は前にスペースを入れる
                     System.out.print(" ");
                 }
                 System.out.print(stack[j]);
             }
-            System.out.println("");
+            System.out.println(""); // 各行の末尾に改行を入れる
         }
-        sc.close();
+        
+        sc.close(); // Scannerを閉じる
     }
 }
