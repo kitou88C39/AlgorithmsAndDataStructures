@@ -14,13 +14,12 @@ public class Main{
             int query = sc.nextInt();
             if (query == 1) {
                 // 1 の処理をここに書く
-                char x = sc.next().charAt(0)
+                char x = sc.next().charAt(0);
                 stack[stack_size] = x;
                 stack_size++;
             } else if (query == 2) {
                 // 2 の処理をここに書く
                 stack_size--;
-
             }
         }
         for (int j = 0; j < stack_size; j++) {
