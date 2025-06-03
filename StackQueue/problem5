@@ -1,24 +1,50 @@
 import java.util.*;
 
-public class Main{
+public class Main {
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
 
-        int n = sc.nextInt();
+        int n = sc.nextInt(); // 文字列Sの長さ
 
-        String s = sc.next();
+        String s = sc.next(); // 括弧列S
 
+        // スタックの宣言: java.util.Deque はスタックとしてもキューとしても使えるインターフェース
+        // ArrayDeque は Deque の実装クラスで、効率的
         Deque<Character> stack = new ArrayDeque<Character>();
 
+        // 文字列 S の各文字をループで処理
         for (int i = 0; i < n; i++) {
-            //ここに括弧列判定のコードを書く
+            char currentChar = s.charAt(i); // 現在の文字を取得
+
+            // ここに括弧列判定のコードを書く
+            if (currentChar == '(') {
+                // 開き括弧の場合、スタックにプッシュ
+                stack.push(currentChar);
+            } else if (currentChar == ')') {
+                // 閉じ括弧の場合
+                if (stack.isEmpty()) {
+                    // スタックが空なのに閉じ括弧が来た場合、対応する開き括弧がないため不正
+                    // この時点で不正が確定するので、ループを中断し、結果は "No" になるようにする
+                    // (後続の文字はチェックする必要がないが、ここでは処理を進めて最後の判定で"No"にする)
+                    // または、ここでフラグを立ててループを抜けることも可能
+                    stack.push(')'); // あえて閉じ括弧を積んで、最終的にスタックが空でない状態にする
+                    break; // このbreakで、後のstack.isEmpty()がfalseになるのを保証
+                } else {
+                    // スタックが空でない場合、対応する開き括弧があるのでポップ
+                    stack.pop();
+                }
+            }
         }
-        if (/*ここに括弧列判定のコードを書く*/) {
+
+        // 全ての文字を処理し終えた後、スタックが空であれば正しい括弧列
+        // 空でなければ、対応する閉じ括弧がなかった開き括弧が残っているため不正
+        if (stack.isEmpty()) {
             System.out.println("Yes");
         } else {
             System.out.println("No");
         }
+
         sc.close();
     }
 }
