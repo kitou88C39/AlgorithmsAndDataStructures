@@ -5,27 +5,46 @@ public class Main{
 
         Scanner sc = new Scanner(System.in);
 
-        char[] queue = new char[256];      // キュー本体
-        int queue_size = 0;   // キューに入っている要素数
-        int queue_front = 0;  // キューの先頭
+        char[] queue = new char[256];      // キュー本体 (十分なサイズを確保)
+        int queue_size = 0;    // キューの末尾 (次の要素が追加される位置)
+        int queue_front = 0;   // キューの先頭 (次に出力・削除される要素の位置)
 
-        int q = sc.nextInt();
+        int q = sc.nextInt(); // クエリの数
 
         for (int i = 0; i < q; i++) {
-            int query = sc.nextInt();
+            int query = sc.nextInt(); // クエリの種類
+            
             if (query == 1) {
-                // PUSH の処理をここに書く
+                // PUSH の処理 (1 X)
+                String s = sc.next(); // 文字Xを読み込む (charAt(0)でcharに変換)
+                char x = s.charAt(0);
+                
+                queue[queue_size] = x;    // キューの末尾にXを追加
+                queue_size++;             // 末尾ポインタ (要素数) をインクリメント
             } else if (query == 2) {
-                // POP の処理をここに書く
+                // POP の処理 (2)
+                // 制約により、POP時には必ずキューに要素が1つ以上存在する
+                
+                // 1. 配列 A の先頭にある要素を出力
+                // queue_front が現在の先頭要素のインデックス
+                System.out.println(queue[queue_front]); 
+                
+                // 2. その要素を削除 (論理的な削除なので queue_front をインクリメントするだけ)
+                queue_front++;            // 先頭ポインタをインクリメント
             }
+            
+            // 各クエリの処理が終わったあと、配列 A の各要素の値を半角スペース区切りで出力
+            // キューが空の場合は改行のみ
+            // queue_front から queue_size-1 までの要素が出力対象
             for (int j = queue_front; j < queue_size; j++) {
-                if (j > queue_front) {
+                if (j > queue_front) { // 最初の要素以外は前にスペースを入れる
                     System.out.print(" ");
                 }
                 System.out.print(queue[j]);
             }
-            System.out.println("");
+            System.out.println(""); // 各行の末尾に改行を入れる
         }
-        sc.close();
+        
+        sc.close(); // Scannerを閉じる
     }
 }
