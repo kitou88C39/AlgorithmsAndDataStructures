@@ -1,0 +1,31 @@
+import java.util.*;
+
+public class Main{
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        char[] queue = new char[256];      // キュー本体
+        int queue_size = 0;   // キューに入っている要素数
+        int queue_front = 0;  // キューの先頭
+
+        int q = sc.nextInt();
+
+        for (int i = 0; i < q; i++) {
+            int query = sc.nextInt();
+            if (query == 1) {
+                // PUSH の処理をここに書く
+            } else if (query == 2) {
+                // POP の処理をここに書く
+            }
+            for (int j = queue_front; j < queue_size; j++) {
+                if (j > queue_front) {
+                    System.out.print(" ");
+                }
+                System.out.print(queue[j]);
+            }
+            System.out.println("");
+        }
+        sc.close();
+    }
+}
