@@ -1,0 +1,29 @@
+import java.util.*;
+
+public class Main{
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        int n,k;
+
+        n = sc.nextInt();
+        k = sc.nextInt();
+
+        int[] a = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            a[i] = sc.nextInt();
+        }
+
+        Queue<Integer> que = new ArrayDeque<>();
+
+        int next_person = 0;
+        int person_on_escalator = 0;
+
+        for (int time = 1; time < 50000; time++) {
+            // ここにエスカレーターのシミュレーションにあたるコードを書く
+        }
+        sc.close();
+    }
+}
