@@ -8,6 +8,16 @@ public class Main{
         char[] stack = new char[256];      // キュー本体
         int stack_size = 0;   // スタックに入っている要素数
 
+        int q = sc.nextInt();
+
+        for (int i = 0; i < q; i++) {
+            int query = sc.nextInt();
+            if (query == 1) {
+                // 1 の処理をここに書く
+            } else if (query == 2) {
+                // 2 の処理をここに書く
+            }
+        }
         for (int j = 0; j < stack_size; j++) {
             System.out.print(stack[j]);
         }
