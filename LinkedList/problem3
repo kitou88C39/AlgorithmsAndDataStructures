@@ -54,9 +54,15 @@ public class Main {
         list.print();
 
         // node1 の次のノードを削除
+        list.eraseAfter(node1);
+
 
         // リストを出力
+        list.print();
 
         // node3 の次のノードを削除 (エラー)
+        list.eraseAfter(node3);
+
+        }
     }
-}
+
