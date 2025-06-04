@@ -38,7 +38,10 @@ public class Main {
         Node node1 = new Node(3);
         // 順番に参照をつなぐ
 
+        list.dummy.next = node1;
         // 最初のダミーノードの値を出力
+        node1.next = node2;
+        Node node2 = node3;
         // 次のノードの値を順番に出力
     }
 }
