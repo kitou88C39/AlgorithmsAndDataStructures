@@ -1,0 +1,47 @@
+import java.util.Scanner;
+
+class Node {
+    int value;
+    Node next;
+
+    Node(int value) {
+        this.value = value;
+    }
+}
+
+
+class List {
+    Node dummy;
+
+    List() {
+        dummy = new Node(-1);
+        dummy.next = dummy;
+    }
+
+    void print() {
+        for (Node x = dummy.next; x != dummy; x = x.next) {
+            System.out.print(x.value + " ");
+        }
+        System.out.println();
+    }
+
+    Node insertAfter(Node x, int value) {
+        // value を値にもつ新しいノード newNode を作成
+        // newNode の next を x の次のノードに更新
+        // x の next を newNode に更新
+        // newNode を返す
+    }
+}
+
+
+public class Main {
+
+    public static void main(String[] args) {
+        // 新しいリストを作成
+        // 値 1 をもつノードを挿入
+        // 値 2 をもつノードを挿入
+        // 値 3 をもつノードを挿入
+
+        // リストを出力
+    }
+}
