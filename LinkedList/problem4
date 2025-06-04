@@ -11,36 +11,64 @@ class Node {
 
 
 class List {
-	Node dummy;
+	Node dummy; // ダミーノード
 
 	List() {
-		dummy = new Node(-1);
-		dummy.next = dummy;
+		dummy = new Node(-1); // ダミーノードの値を -1 に設定 (問題によっては任意の識別可能な値)
+		dummy.next = dummy;   // 最初はダミーノードが自分自身を指す（空のリストの状態）
 	}
 
+	// リストの全要素をダミーノードを除いて出力する
 	void print() {
+		// ダミーノードの次からループを開始し、ダミーノードに到達するまで続ける
 		for (Node x = dummy.next; x != dummy; x = x.next) {
 			System.out.print(x.value + " ");
 		}
-		System.out.println();
+		System.out.println(); // 最後に改行を出力
 	}
 
+	/**
+	 * 与えられた値 value を持つ最初のノードを検索する。
+	 * そのようなノードが見つからない場合はダミーノードを返す。
+	 * @param value 検索する値
+	 * @return 値を持つ最初のノード、または見つからない場合はダミーノード
+	 */
 	Node find(int value) {
 		// ここにコードを書く
+		// ダミーノードの次から実際の要素を走査開始
+		Node current = dummy.next;
+
+		// current がダミーノードに戻ってくるまでループを続ける
+		while (current != dummy) {
+			if (current.value == value) {
+				// 値が見つかった場合、そのノードを返す
+				return current;
+			}
+			current = current.next; // 次のノードへ進む
+		}
+
+		// ループを終えても値が見つからなかった場合、ダミーノードを返す
+		return dummy;
 	}
 
+	// 指定されたノード x の直後に新しいノードを挿入する
 	Node insertAfter(Node x, int value) {
 		Node newNode = new Node(value);
-		newNode.next = x.next;
-		x.next = newNode;
+		newNode.next = x.next; // 新しいノードの next は x の次のノードを指す
+		x.next = newNode;      // x の next は新しいノードを指す
 		return newNode;
 	}
 
+	// 指定されたノード x の次のノードを削除する
 	void eraseAfter(Node x) {
+		// x.next がダミーノードの場合、ダミーノードを直接削除しようとしているため、エラーとする
+		// (問題の要件によっては、空のリストからの削除や、ダミーノード自身の削除は許可されないことが多い)
 		if (x.next == dummy) {
-			throw new RuntimeException("ダミーノードは削除できません");
+			// 例外をスローするか、何もしないか、設計による
+			// ここでは問題文に合わせて、不正な操作として RuntimeException をスロー
+			throw new RuntimeException("ダミーノードの次には実要素がありません（またはダミーノード自身を削除しようとしています）");
 		}
-		x.next = x.next.next;
+		x.next = x.next.next; // x の next を、削除対象ノードの次のノードに繋ぎ替える
 	}
 
 }
@@ -50,14 +78,27 @@ public class Main {
 
 	public static void main(String[] args) {
 		List list = new List();
-		Node node1 = list.insertAfter(list.dummy, 1);
-		Node node2 = list.insertAfter(node1, 2);
-		Node node3 = list.insertAfter(node2, 3);
+		
+		// 1, 2, 3 を順に挿入
+		Node node1 = list.insertAfter(list.dummy, 1); // dummy -> 1
+		Node node2 = list.insertAfter(node1, 2);      // 1 -> 2
+		Node node3 = list.insertAfter(node2, 3);      // 2 -> 3
+                                                        // (現在のリスト: dummy -> 1 -> 2 -> 3 -> dummy)
 
-		list.print();
+		list.print(); // 出力: 1 2 3
 
-		list.eraseAfter(list.find(2));
+		// 値 2 を持つノードを検索
+		Node nodeToEraseAfter = list.find(2);
+		
+		// 検索結果がダミーノードでなければ、そのノードの次を削除
+		// find(2) は node2 を返すので、node2 の次 (node3) を削除
+		if (nodeToEraseAfter != list.dummy) {
+		    list.eraseAfter(nodeToEraseAfter);
+		} else {
+		    System.out.println("Node with value 2 not found.");
+		}
 
-		list.print();
+
+		list.print(); // 出力: 1 2
 	}
 }
