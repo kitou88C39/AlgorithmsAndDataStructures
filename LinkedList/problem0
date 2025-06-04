@@ -48,5 +48,8 @@ public class Main {
         System.out.println(list.dummy.value);
         System.out.println(list.dummy.next.value);
         System.out.println(list.dummy.next.next.value);
+        System.out.println(list.dummy.next.next.next.value);
+        System.out.println(list.dummy.next.next.next.nextvalue);
+        System.out.println(list.dummy.next.next.next.next.next.value);
     }
 }
