@@ -41,7 +41,12 @@ public class Main {
         list.dummy.next = node1;
         // 最初のダミーノードの値を出力
         node1.next = node2;
-        Node node2 = node3;
+        node2.next = node3;
+        node3.next = list.dummy;
         // 次のノードの値を順番に出力
+
+        System.out.println(list.dummy.value);
+        System.out.println(list.dummy.next.value);
+        System.out.println(list.dummy.next.next.value);
     }
 }
