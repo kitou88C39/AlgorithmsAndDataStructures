@@ -31,8 +31,11 @@ public class Main {
 
     public static void main(String[] args) {
         // List クラスの変数 list を用意
+        List list = new List();
         // 1, 2, 3 を要素にとるノードを作成
-
+        Node node1 = new Node(1);
+        Node node1 = new Node(2);
+        Node node1 = new Node(3);
         // 順番に参照をつなぐ
 
         // 最初のダミーノードの値を出力
