@@ -2,7 +2,9 @@ import java.util.Scanner;
 
 class Node {
     // Node クラスに値を表す変数 value を用意
+    int value;
     // Node クラスに次のノードへの参照を表す変数 next を用意
+    Node next;
 
     // Node クラスに、値を受け取って初期化する関数を用意
     // 受け取った値を変数 value に代入
@@ -11,6 +13,7 @@ class Node {
 
 class List {
     // List クラスに、ダミーノードを表すノード dummy を用意
+    Node dummy;
 
     // List クラスに、ダミーノード 1 つでリストを初期化する関数を用意
     // ダミーノードを変数 dummy に代入
