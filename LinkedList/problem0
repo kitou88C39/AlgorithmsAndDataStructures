@@ -1,0 +1,32 @@
+import java.util.Scanner;
+
+class Node {
+    // Node クラスに値を表す変数 value を用意
+    // Node クラスに次のノードへの参照を表す変数 next を用意
+
+    // Node クラスに、値を受け取って初期化する関数を用意
+    // 受け取った値を変数 value に代入
+}
+
+
+class List {
+    // List クラスに、ダミーノードを表すノード dummy を用意
+
+    // List クラスに、ダミーノード 1 つでリストを初期化する関数を用意
+    // ダミーノードを変数 dummy に代入
+    // ダミーノードの次のノードをダミーノードに設定
+}
+
+
+public class Main {
+
+    public static void main(String[] args) {
+        // List クラスの変数 list を用意
+        // 1, 2, 3 を要素にとるノードを作成
+
+        // 順番に参照をつなぐ
+
+        // 最初のダミーノードの値を出力
+        // 次のノードの値を順番に出力
+    }
+}
