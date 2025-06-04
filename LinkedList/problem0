@@ -7,6 +7,9 @@ class Node {
     Node next;
 
     // Node クラスに、値を受け取って初期化する関数を用意
+    Node(int value){
+        this.value = value;
+    }
     // 受け取った値を変数 value に代入
 }
 
@@ -16,7 +19,10 @@ class List {
     Node dummy;
 
     // List クラスに、ダミーノード 1 つでリストを初期化する関数を用意
+    List(){}
     // ダミーノードを変数 dummy に代入
+    dummy = new Node(-1);
+    dummy.next = dummy;
     // ダミーノードの次のノードをダミーノードに設定
 }
 
