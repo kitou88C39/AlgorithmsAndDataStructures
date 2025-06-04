@@ -9,20 +9,26 @@ class Node {
 	}
 }
 
-
 class List {
-	Node dummy;
+	Node dummy; // ダミーノード
 
 	List() {
-		dummy = new Node(-1);
-		dummy.next = dummy;
+		dummy = new Node(-1); // ダミーノードの値は -1
+		dummy.next = dummy;   // 最初はダミーノードが自分自身を指す（空のリスト）
 	}
 
 	void print() {
 		// ここにコードを書く
+		Node current = dummy.next; // ダミーノードの次から走査を開始
+
+		// current がダミーノードに戻ってくるまでループを続ける
+		while (current != dummy) {
+			System.out.print(current.value + " "); // 要素の値と半角スペースを出力
+			current = current.next; // 次のノードへ進む
+		}
+		System.out.println(); // 最後に改行を出力
 	}
 }
-
 
 public class Main {
 
@@ -32,11 +38,12 @@ public class Main {
 		Node node2 = new Node(2);
 		Node node3 = new Node(3);
 
+		// リストの構築: dummy -> node1 -> node2 -> node3 -> dummy
 		list.dummy.next = node1;
 		node1.next = node2;
 		node2.next = node3;
-		node3.next = list.dummy;
+		node3.next = list.dummy; // 最後のノードがダミーノードを指して循環
 
-		list.print();
+		list.print(); // printメソッドを呼び出し
 	}
 }
