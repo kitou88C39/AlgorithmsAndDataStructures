@@ -63,7 +63,11 @@ class List {
 
     void erase(Node x) {
         // もし x がダミーノードであれば
+        if (x == dummy){
+            return;
+        }
         // エラーを出力
+        System.out.println("error");
         // x の次のノードの prev を x の前のノードに更新
         // x の前のノードの next を x の次のノードに更新
     }
