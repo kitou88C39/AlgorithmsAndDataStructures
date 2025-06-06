@@ -51,7 +51,9 @@ class List {
         // newNode の next を x の次のノードに更新
         newNode.next = x.next;
         // newNode の prev を x に更新
+        newNode.prev = x;
         // x の next を newNode に更新
+        x.next = newNode;
         // newNode を返す
         return newNode;
     }
@@ -69,9 +71,9 @@ public class Main {
         Node node2 = list.insertAfter(list.dummy, 2);
         // 値 3 をもつノードを挿入
         Node node3 = list.insertAfter(list.dummy, 3);
-
         // リストを出力
         list.print();
         // 逆向きにも出力
+        list.printReverse();
     }
 }
