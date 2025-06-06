@@ -43,17 +43,42 @@ class List {
 		return dummy;
 	}
 
+	// 指定されたノード x の直後に新しいノードを挿入する
 	Node insertAfter(Node x, int value) {
 		Node newNode = new Node(value);
-		x.next.prev = newNode;
-		newNode.next = x.next;
-		newNode.prev = x;
-		x.next = newNode;
+		
+		// 新しいノードと x の次のノードとのリンクを確立
+		x.next.prev = newNode; // (xの次のノードのprevをnewNodeにする)
+		newNode.next = x.next; // (newNodeのnextをxの次のノードにする)
+		
+		// 新しいノードと x とのリンクを確立
+		newNode.prev = x;      // (newNodeのprevをxにする)
+		x.next = newNode;      // (xのnextをnewNodeにする)
+		
 		return newNode;
 	}
 
+	/**
+	 * 指定したノード x の直前に、受け取った値 value を持つ新しいノードを挿入する。
+	 * @param x 新しいノードを挿入する対象ノード
+	 * @param value 新しいノードに格納する値
+	 * @return 挿入された新しいノード
+	 */
 	Node insertBefore(Node x, int value) {
 		// ここにコードを書く
+		Node newNode = new Node(value);
+
+		// newNode と x とのリンクを確立
+		newNode.next = x;      // 新しいノードの next は x を指す
+		newNode.prev = x.prev; // 新しいノードの prev は x の前のノードを指す
+
+		// x の前のノードの next を newNode に変更
+		x.prev.next = newNode;
+
+		// x の prev を newNode に変更
+		x.prev = newNode;
+		
+		return newNode;
 	}
 }
 
@@ -62,11 +87,21 @@ public class Main {
 
 	public static void main(String[] args) {
 		List list = new List();
-		Node node1 = list.insertBefore(list.dummy, 1);
-		Node node2 = list.insertBefore(node1, 2);
-		Node node3 = list.insertBefore(node2, 3);
+		
+		// insertBefore(list.dummy, 1) は、ダミーノードの直前に 1 を挿入。
+		// ダミーノードの直前はリストの末尾なので、実質的にリストの末尾に 1 を追加することになる。
+		// dummy <-> (新しいノード1) <-> dummy
+		Node node1 = list.insertBefore(list.dummy, 1); 
+		
+		// insertBefore(node1, 2) は、node1 の直前に 2 を挿入。
+		// dummy <-> 2 <-> 1 <-> dummy
+		Node node2 = list.insertBefore(node1, 2); 
+		
+		// insertBefore(node2, 3) は、node2 の直前に 3 を挿入。
+		// dummy <-> 3 <-> 2 <-> 1 <-> dummy
+		Node node3 = list.insertBefore(node2, 3); 
 
-		list.print();
-		list.printReverse();
+		list.print();        // 期待される出力: 3 2 1
+		list.printReverse(); // 期待される出力: 1 2 3
 	}
 }
