@@ -45,10 +45,11 @@ class List {
 
     Node insertAfter(Node x, int value) {
         // value を値にもつ新しいノード newNode を作成
-
-
+        Node newNode = new Node(value);
         // x の次のノードの prev を newNode に更新
+        x.next.prev = newNode;
         // newNode の next を x の次のノードに更新
+        newNode.next = x.next;
         // newNode の prev を x に更新
         // x の next を newNode に更新
         // newNode を返す
