@@ -10,9 +10,8 @@ class Node {
 	}
 }
 
-
 class List {
-	Node dummy;
+	Node dummy; // ダミーノード
 
 	List() {
 		dummy = new Node(-1);
@@ -20,6 +19,7 @@ class List {
 		dummy.prev = dummy;
 	}
 
+	// リストの全要素をダミーノードを除いて出力する
 	void print() {
 		for (Node x = dummy.next; x != dummy; x = x.next) {
 			System.out.print(x.value + " ");
@@ -27,6 +27,7 @@ class List {
 		System.out.println();
 	}
 
+	// 逆順に要素を出力する
 	void printReverse() {
 		for (Node x = dummy.prev; x != dummy; x = x.prev) {
 			System.out.print(x.value + " ");
@@ -34,55 +35,86 @@ class List {
 		System.out.println();
 	}
 
+	// 指定された値を持つ最初のノードを検索する
 	Node find(int value) {
 		for (Node x = dummy.next; x != dummy; x = x.next) {
 			if (x.value == value) {
 				return x;
 			}
 		}
-		return dummy;
+		return dummy; // 見つからなければダミーノードを返す
 	}
 
+	// 指定されたノード x の直後に新しいノードを挿入する
 	Node insertAfter(Node x, int value) {
 		Node newNode = new Node(value);
+		
 		x.next.prev = newNode;
 		newNode.next = x.next;
+		
 		newNode.prev = x;
 		x.next = newNode;
+		
 		return newNode;
 	}
 
+	// 指定されたノード x の直前に新しいノードを挿入する
 	Node insertBefore(Node x, int value) {
 		Node newNode = new Node(value);
+		
 		x.prev.next = newNode;
 		newNode.prev = x.prev;
+		
 		newNode.next = x;
 		x.prev = newNode;
+		
 		return newNode;
 	}
 
+	// 指定されたノード x を削除する
 	void erase(Node x) {
 		if (x == dummy) {
 			throw new RuntimeException("ダミーノードは削除できません");
 		}
-		x.next.prev = x.prev;
-		x.prev.next = x.next;
+		x.next.prev = x.prev; // x の次のノードの prev を x の前のノードに繋ぎ替える
+		x.prev.next = x.next; // x の前のノードの next を x の次のノードに繋ぎ替える
 	}
 
+	// リストの先頭に新しいノードを挿入する
 	Node pushFront(int value) {
-		// 最初に挿入・ここにコードを書く
+		// 先頭はダミーノードの直後なので、dummy の直後に挿入する
+		return insertAfter(dummy, value);
 	}
 
+	// リストの末尾に新しいノードを挿入する
 	Node pushBack(int value) {
-		// 最後に挿入・ここにコードを書く
+		// 末尾はダミーノードの直前なので、dummy の直前に挿入する
+		return insertBefore(dummy, value);
 	}
 
+	// リストの先頭のノードを削除する
 	void popFront() {
-		// 最初を削除・ここにコードを書く
+		// 先頭のノードは dummy.next
+		// リストが空でないことを確認（もし空の場合の挙動を定義）
+		if (dummy.next == dummy) {
+			// 例外をスローするか、何もしないか、設計による
+			// 問題のテストケースでは空のリストからの pop は発生しない前提であることが多い
+			// 例外として RuntimeException をスローしてもよい
+			// throw new RuntimeException("リストが空のため、popFrontできません");
+			return; // 何もせず終了
+		}
+		erase(dummy.next); // dummy.next（現在の先頭ノード）を削除
 	}
 
+	// リストの末尾のノードを削除する
 	void popBack() {
-		// 最後を削除・ここにコードを書く
+		// 末尾のノードは dummy.prev
+		// リストが空でないことを確認
+		if (dummy.prev == dummy) {
+			// throw new RuntimeException("リストが空のため、popBackできません");
+			return; // 何もせず終了
+		}
+		erase(dummy.prev); // dummy.prev（現在の末尾ノード）を削除
 	}
 }
 
@@ -91,26 +123,30 @@ public class Main {
 
 	public static void main(String[] args) {
 		List list = new List();
-		Node node1 = list.pushBack(1);
-		Node node2 = list.pushBack(2);
-		Node node3 = list.pushBack(3);
+		
+		// pushBack を使って 1, 2, 3 を末尾に追加
+		Node node1 = list.pushBack(1); // list: dummy <-> 1 <-> dummy
+		Node node2 = list.pushBack(2); // list: dummy <-> 1 <-> 2 <-> dummy
+		Node node3 = list.pushBack(3); // list: dummy <-> 1 <-> 2 <-> 3 <-> dummy
 
-		list.print();
-		list.printReverse();
+		list.print();        // 期待される出力: 1 2 3
+		list.printReverse(); // 期待される出力: 3 2 1
 
-		list.popBack();
+		list.popBack();      // 3 を削除。list: dummy <-> 1 <-> 2 <-> dummy
 
-		list.print();
-		list.printReverse();
+		list.print();        // 期待される出力: 1 2
+		list.printReverse(); // 期待される出力: 2 1
 
-		list.pushFront(0);
+		list.pushFront(0);   // 0 を先頭に追加。list: dummy <-> 0 <-> 1 <-> 2 <-> dummy
 
-		list.print();
-		list.printReverse();
+		list.print();        // 期待される出力: 0 1 2
+		list.printReverse(); // 期待される出力: 2 1 0
 
-		list.popFront();
+		list.popFront();     // 0 を削除。list: dummy <-> 1 <-> 2 <-> dummy
 
-		list.print();
-		list.printReverse();
+		list.print();        // 期待される出力: 1 2
+		list.printReverse(); // 期待される出力: 2 1
+		
+		sc.close(); // Scannerのクローズを忘れずに
 	}
 }
