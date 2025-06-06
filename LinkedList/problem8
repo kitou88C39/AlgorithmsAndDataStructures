@@ -87,8 +87,10 @@ public class Main {
         list.printReverse();
 
         // node2 を削除
-
+        list.erase(node2);
         // リストを出力
+        list.print();
         // 逆向きに出力
+        list.print();
     }
 }
