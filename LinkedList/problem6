@@ -45,11 +45,14 @@ class List {
 
     Node insertAfter(Node x, int value) {
         // value を値にもつ新しいノード newNode を作成
+
+
         // x の次のノードの prev を newNode に更新
         // newNode の next を x の次のノードに更新
         // newNode の prev を x に更新
         // x の next を newNode に更新
         // newNode を返す
+        return newNode;
     }
 }
 
@@ -58,11 +61,16 @@ public class Main {
 
     public static void main(String[] args) {
         // 新しいリストを作成
+        List list = new List();
         // 値 1 をもつノードを挿入
+        Node node1 = list.insertAfter(list.dummy, 1);
         // 値 2 をもつノードを挿入
+        Node node2 = list.insertAfter(list.dummy, 2);
         // 値 3 をもつノードを挿入
+        Node node3 = list.insertAfter(list.dummy, 3);
 
         // リストを出力
+        list.print();
         // 逆向きにも出力
     }
 }
