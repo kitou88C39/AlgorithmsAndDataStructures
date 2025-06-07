@@ -1,0 +1,37 @@
+import java.util.*;
+
+public class Main {
+
+    // ハッシュ関数
+    static int H(int x) {
+        return x % 10;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        // ハッシュテーブルの初期化
+        var table = new ArrayList<Integer>();
+        for(int i = 0; i < 10; i++){
+            table.add(-1);
+        }
+
+        int n = sc.nextInt();
+
+        for(int i = 0; i < n; i++){
+            int x = sc.nextInt();
+
+            int hash = H(x);
+
+            // データの追加
+            table.set(hash, x);
+        }
+
+        // データの検索
+        int y = 188;
+        System.out.println();
+
+        int z = 55;
+        System.out.println();
+    }
+}
