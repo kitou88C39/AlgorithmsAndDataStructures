@@ -4,20 +4,29 @@ public class Main {
 
     static int count(char c, String x) {
         // ここに書き加える
-        
+        int charCount = 0; // カウントを初期化
+        // 文字列 x の各文字をループで確認
+        for (int i = 0; i < x.length(); i++) {
+            if (x.charAt(i) == c) { // 現在の文字が c と一致したら
+                charCount++;        // カウントを増やす
+            }
+        }
+        return charCount; // 最終的なカウントを返す
     }
 
     static int H(String x) {
+        // 'p', 'a', 'i', 'z' の出現回数を合計
         return count('p', x) + count('a', x) + count('i', x) + count('z', x);
     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
+        int n = sc.nextInt(); // 入力される文字列の個数
 
         for (int i = 0; i < n; i++) {
-            String x = sc.next();
-            System.out.println(H(x));
+            String x = sc.next(); // 各文字列
+            System.out.println(H(x)); // ハッシュ値を計算して出力
         }
+        sc.close(); // Scannerを忘れずにクローズ
     }
 }
