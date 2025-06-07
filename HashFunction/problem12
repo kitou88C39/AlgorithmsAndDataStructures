@@ -11,29 +11,36 @@ public class Main {
         Scanner sc = new Scanner(System.in);
 
         // ハッシュテーブルの初期化
+        // ArrayList を使用して、サイズ 10 のテーブルを -1 で初期化
         var table = new ArrayList<Integer>();
         for(int i = 0; i < 10; i++){
-            table.add(-1);
+            table.add(-1); // -1 は初期値または「空」を示す値として使用
         }
 
-        int n = sc.nextInt();
+        int n = sc.nextInt(); // 入力されるデータの個数
 
         for(int i = 0; i < n; i++){
-            int x = sc.nextInt();
+            int x = sc.nextInt(); // 入力データ
 
-            int hash = H(x);
+            int hash = H(x); // 最初のハッシュ値を計算
 
-            // オープンアドレス法
+            // オープンアドレス法 (線形探索)
+            // 指定されたハッシュ位置がすでに埋まっている（-1 ではない）間、
+            // 次の空きスロットを探す
             while (table.get(hash) != -1) {
-                hash = 
+                // ハッシュ値を1増加させてハッシュ関数で再計算 (ラップアラウンドも考慮)
+                hash = (hash + 1) % 10;
             }
 
-            // データの追加
+            // 空きスロットが見つかったらデータを追加
             table.set(hash, x);
         }
 
+        // 最終的なハッシュテーブルの内容を0から9のインデックス順に出力
         for (int i = 0; i < 10; i++) {
             System.out.println(table.get(i));
         }
+        
+        sc.close(); // Scannerをクローズ
     }
 }
