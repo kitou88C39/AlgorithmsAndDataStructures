@@ -11,27 +11,35 @@ public class Main {
         Scanner sc = new Scanner(System.in);
 
         // ハッシュテーブルの初期化
+        // ArrayList を使用して、サイズ 10 のテーブルを -1 で初期化
         var table = new ArrayList<Integer>();
         for(int i = 0; i < 10; i++){
-            table.add(-1);
+            table.add(-1); // -1 は初期値または「空」を示す値として使用
         }
 
-        int n = sc.nextInt();
+        int n = sc.nextInt(); // 入力されるデータの個数
 
         for(int i = 0; i < n; i++){
-            int x = sc.nextInt();
+            int x = sc.nextInt(); // 入力データ
 
-            int hash = ;
+            // 1. ハッシュ値を計算
+            int hash = H(x); // H(x) 関数を呼び出してハッシュインデックスを取得
 
-            // データの追加
-            
+            // 2. データをハッシュテーブルに追加
+            // table の hash インデックスの位置に x を設定
+            // (この実装では衝突解決は考慮されていません。最後の値が上書きされます)
+            table.set(hash, x); 
         }
 
         // データの検索
+        // 188 のハッシュ値は 188 % 10 = 8。table[8] の値を出力。
         int y = 188;
         System.out.println(table.get(H(y)));
 
+        // 55 のハッシュ値は 55 % 10 = 5。table[5] の値を出力。
         int z = 55;
         System.out.println(table.get(H(z)));
+        
+        sc.close(); // Scanner をクローズ
     }
 }
