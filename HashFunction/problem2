@@ -2,6 +2,10 @@ import java.util.*;
 
 public class Main {
 
+    static int H (int x, int a, int b, int mod){
+        return (a * x + b) % mod;
+    }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
@@ -9,5 +13,9 @@ public class Main {
         int a = sc.nextInt();
         int b = sc.nextInt();
         int mod = sc.nextInt();
+
+        for (int i = 0; i < n; i++){
+            int x = sc.nextInt();
+        }
     }
 }
