@@ -11,32 +11,40 @@ public class Main {
         Scanner sc = new Scanner(System.in);
 
         // ハッシュテーブルの初期化
+        // 各インデックスに ArrayList (チェイン) を格納
         var table = new ArrayList<ArrayList<Integer>>();
         for(int i = 0; i < 10; i++){
-            table.add(new ArrayList<Integer>());
+            table.add(new ArrayList<Integer>()); // 各チェインを新しい空の ArrayList で初期化
         }
 
-        int n = sc.nextInt();
+        int n = sc.nextInt(); // 入力されるデータの個数
 
         for(int i = 0; i < n; i++){
-            int x = sc.nextInt();
+            int x = sc.nextInt(); // 入力データ
 
-            int hash = H(x);
+            int hash = H(x); // ハッシュ値を計算
 
             // チェイン法でのデータの追加
-            
+            // 計算されたハッシュ値に対応する ArrayList (チェイン) を取得し、
+            // そのリストの末尾にデータを追加する
+            table.get(hash).add(x);
         }
 
+        // ハッシュテーブルの内容を整形して出力
         for (int i = 0; i < 10; i++) {
-            System.out.print(i + ": ");
+            System.out.print(i + ": "); // インデックスを出力
             if (table.get(i).size() > 0) {
+                // チェインに要素がある場合、最初の要素を出力
                 System.out.print(table.get(i).get(0));
             }
+            // 2番目以降の要素があれば、スペース区切りで出力
             for (int j = 1; j < table.get(i).size(); j++) {
                 System.out.print(" ");
                 System.out.print(table.get(i).get(j));
             }
-            System.out.println();
+            System.out.println(); // 各チェインの最後には改行
         }
+        
+        sc.close(); // Scanner をクローズ
     }
 }
