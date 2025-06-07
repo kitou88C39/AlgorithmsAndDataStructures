@@ -2,6 +2,15 @@ import java.util.*;
 
 public class Main {
 
+    static int count(char c, String x){
+        int ret = 0;
+        for (int i = 0; i < x.length(); i++) {
+            if (x.charAt(i) == c){
+                ret ++;
+            }
+        }
+    }
+
     static int H(String x){
         return count('p', x) + count('a', x) + count('i', x) + count('z', x);
     }
