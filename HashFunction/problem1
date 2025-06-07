@@ -4,17 +4,19 @@ public class Main {
 
     static int H(int x, int mod) {
         // ここに書き加える
-
+        // ハッシュ関数 H(x) = x % mod を実装
+        return x % mod;
     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        int mod = sc.nextInt();
+        int n = sc.nextInt();   // 入力されるxの個数
+        int mod = sc.nextInt(); // 剰余の基準となる数
 
-        for (int i=0; i<n; i++) {
-            int x = sc.nextInt();
-            System.out.println(H(x, mod));
+        for (int i = 0; i < n; i++) {
+            int x = sc.nextInt(); // 各xの値
+            System.out.println(H(x, mod)); // ハッシュ値を計算して出力
         }
+        sc.close(); // Scannerを忘れずにクローズ
     }
 }
