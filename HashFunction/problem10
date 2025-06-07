@@ -13,7 +13,7 @@ public class Main {
         // ハッシュテーブルの初期化
         var table = new ArrayList<Integer>();
         for(int i = 0; i < 10; i++){
-            table.add(-1);
+            table.add(-1); // -1 は初期値または「空」を示す値として使用
         }
 
         int n = sc.nextInt();
@@ -23,15 +23,22 @@ public class Main {
 
             int hash = H(x);
 
-            // データの追加
+            // データの追加 (この実装では衝突解決は行われず、上書きされます)
             table.set(hash, x);
         }
 
         // データの検索
         int y = 999;
+        // H(999) = 999 % 10 = 9
+        // table[9] には最後にハッシュ値9のデータ（999）が格納されているはず
         System.out.println(table.get(H(y)));
 
-        int z = ;
+        // H(z) = H(y) となるように z を代入
+        // 999 と同じハッシュ値 9 を持つ別の数（例: 19）を代入します
+        int z = 19; // H(19) = 19 % 10 = 9。これで H(z) = H(y) となり衝突します。
+        // table[9] の値を出力（これも 999 が格納されているはず）
         System.out.println(table.get(H(z)));
+
+        sc.close();
     }
 }
